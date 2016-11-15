@@ -65,7 +65,6 @@ export class SecureFileStorageService {
     public write(key: string, data: any): angular.IPromise<any> {
         var deferred: ng.IDeferred<any> = this.$q.defer();
         this.securityApiReady().then((isReady: boolean) => {
-            console.log(isReady);
             if (isReady) {
                 if (this.ionic.Platform.isAndroid()) {
                     this.securityApi.secureData.createFromData({data: data})
