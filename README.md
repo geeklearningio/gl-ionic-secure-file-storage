@@ -9,13 +9,19 @@ It allows you to transparently use Cordova encryption plugins to encrypt and sto
 
 #Installation
 1) In your project folder, install this plugin using npm
-`npm install git+https://git@github.com/geeklearningio/gl-ionic-secure-file-storage.git --save`
+```
+npm install git+https://git@github.com/geeklearningio/gl-ionic-secure-file-storage.git --save
+```
 
 2) Install the [https://github.com/AppSecurityApi/com-intel-security-cordova-plugin](Intel Security Cordova Plugin)
-`cordova plugin add com-intel-security-cordova-plugin --save`
+```
+cordova plugin add com-intel-security-cordova-plugin --save
+```
 
 3) Install the [https://github.com/Crypho/cordova-plugin-secure-storage](Crypho Cordova Plugin Secure Storage)
-`cordova plugin add https://github.com/crypho/cordova-plugin-secure-storage.git --save`
+```
+cordova plugin add https://github.com/crypho/cordova-plugin-secure-storage.git --save
+```
 
 Note:
 We need both plugins, because the Intel plugin does not work on iOS9 and more. As specified in this issue: https://github.com/AppSecurityApi/com-intel-security-cordova-plugin/issues/9
@@ -33,7 +39,9 @@ angular.module('mainModuleName', ['ionic', 'gl-ionic-secure-file-storage']){
 ```
 
 3) Specify a namespace for the service. It will create a secure directory with this name on the device. In the angular configm inject the `SecureFileStorageServiceConfigProvider`and set the namespace like this:
-`secureFileStorageServiceConfigProvider.setNamespace('test-app');`
+```
+secureFileStorageServiceConfigProvider.setNamespace('test-app');
+```
 
 # How to use
 This service has a simple Key/Value System.
