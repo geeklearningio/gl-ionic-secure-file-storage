@@ -1,0 +1,23 @@
+﻿<ion-header-bar class="bar-positive">
+    <h1 class="title">Test App</h1>
+</ion-header-bar>
+
+<ion-content class="padding text-center">
+
+    <ion-spinner class="spinner-positive" icon="spiral" ng-show="main.isLoading"></ion-spinner>
+
+
+    <div ng-show="!main.isLoading">
+        <h1>Test Secure Storage</h1>
+        <button ng-click="main.writeSecureStorage()" class="button button-positive">Write</button>
+        <button ng-click="main.readSecureStorage()" class="button button-positive">Read</button>
+        <div>{{main.result}}</div>
+    </div>
+
+    <div class="secondary-text">
+        Note: this will not work on desktop
+    </div>
+
+
+
+</ion-content>

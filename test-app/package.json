@@ -1,0 +1,52 @@
+{
+  "name": "test-app",
+  "version": "1.0.0",
+  "description": "Test app for the Geek Learning Angular Configuration package",
+  "main": "index.js",
+  "scripts": {
+    "build:dev": "webpack --config webpack/webpack.development.config.js --env development",
+    "build:production": "webpack --config webpack/webpack.production.config.js --env production",
+    "serve:fastcss": "npm-run-all --parallel fastcss webpack:watch",
+    "webpack:watch": "webpack --config webpack/webpack.fastcss.config.js --watch --env development",
+    "fastcss": "gulp watch",
+    "serve": "webpack --config webpack/webpack.development.config.js --watch  --env development",
+    "serve:production": "webpack --config webpack/webpack.production.config.js --watch --env production"
+  },
+  "author": "Geek Learning",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^6.4.0",
+    "awesome-typescript-loader": "^1.1.1",
+    "browser-sync": "^2.13.0",
+    "browser-sync-webpack-plugin": "^1.0.3",
+    "copy-webpack-plugin": "^3.0.1",
+    "cordova": "^6.2.0",
+    "css-loader": "0.14.5",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "gl-angular-configuration": "git+https://github.com/geeklearningio/gl-angular-configuration.git",
+    "gulp": "^3.9.1",
+    "gulp-replace": "^0.5.4",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^2.2.0",
+    "gulp-util": "^3.0.7",
+    "html-loader": "^0.4.3",
+    "html-webpack-plugin": "^2.21.0",
+    "imports-loader": "^0.6.5",
+    "json-loader": "^0.5.4",
+    "lodash": "^4.14.0",
+    "ng-annotate-webpack-plugin": "^0.1.3",
+    "node-sass": "^3.8.0",
+    "npm-run-all": "^3.0.0",
+    "postcss-loader": "^0.10.1",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^4.0.0",
+    "style-loader": "^0.13.1",
+    "typescript": "^1.8.10",
+    "typings": "^1.3.0",
+    "webpack": "^1.13.1"
+  },
+  "dependencies": {
+    "ionic-sdk": "^1.2.4"
+  }
+}

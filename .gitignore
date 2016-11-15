@@ -1,0 +1,6 @@
+package/node_modules
+test-app/node_modules
+test-app/platforms
+test-app/plugins
+npm-debug.log
+test-app/www

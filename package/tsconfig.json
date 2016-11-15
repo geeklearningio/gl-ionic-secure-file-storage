@@ -1,0 +1,9 @@
+{
+  "files": [
+    "src/AuthenticationService.ts",
+    "typings/index.d.ts"
+  ],
+  "compilerOptions": {
+    "declaration": true
+  }
+}
