@@ -27,6 +27,8 @@ Note:
 We need both plugins, because the Intel plugin does not work on iOS9 and more. As specified in this issue: https://github.com/AppSecurityApi/com-intel-security-cordova-plugin/issues/9
 And the Android version of the Crypho Plugin uses a system that does not work with big files to encrypt (several hundred kilos).
 
+Here is the Intel api documentation: https://software.intel.com/en-us/node/506834
+
 
 # How to configure
 1) You can use the Typescript (`package/src/SecureFileStorageService.ts`) or the Javascript ((`package/dist/SecureFileStorageService.js`)) version of the Service.
