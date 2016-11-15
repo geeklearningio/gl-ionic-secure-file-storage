@@ -13,12 +13,12 @@ It allows you to transparently use Cordova encryption plugins to encrypt and sto
 npm install git+https://git@github.com/geeklearningio/gl-ionic-secure-file-storage.git --save
 ```
 
-2) Install the [https://github.com/AppSecurityApi/com-intel-security-cordova-plugin](Intel Security Cordova Plugin)
+2) Install the [Intel Security Cordova Plugin](https://github.com/AppSecurityApi/com-intel-security-cordova-plugin)
 ```
 cordova plugin add com-intel-security-cordova-plugin --save
 ```
 
-3) Install the [https://github.com/Crypho/cordova-plugin-secure-storage](Crypho Cordova Plugin Secure Storage)
+3) Install the [Crypho Cordova Plugin Secure Storage](https://github.com/Crypho/cordova-plugin-secure-storage)
 ```
 cordova plugin add https://github.com/crypho/cordova-plugin-secure-storage.git --save
 ```
