@@ -37,11 +37,14 @@ export class SecureFileStorageService {
             this.securityApi = (<any>window).intel.security;
 
             this.setNamespace();
-            this.cryphoSecurityApi = new (<any>window).cordova.plugins.SecureStorage(() => {
-                // OK
-            }, () => {
-                console.log('error initializing Crypho Api');
-            }, this.namespace);
+
+            if (!this.ionic.Platform.isAndroid()) {
+                this.cryphoSecurityApi = new (<any>window).cordova.plugins.SecureStorage(() => {
+                    // OK
+                }, () => {
+                    console.log('error initializing Crypho Api');
+                }, this.namespace);
+            }
         }
     }
 
