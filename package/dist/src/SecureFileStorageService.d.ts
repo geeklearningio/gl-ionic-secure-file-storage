@@ -18,6 +18,7 @@ export declare class SecureFileStorageService {
     private securityApiReady();
     write(key: string, data: any): angular.IPromise<any>;
     read(key: string): angular.IPromise<any>;
+    clear(): angular.IPromise<any>;
     delete(key: string): angular.IPromise<any>;
     canUseSecureFileStorage(): angular.IPromise<boolean>;
 }

@@ -87,7 +87,7 @@
 	            this.cryphoSecurityApi = new window.cordova.plugins.SecureStorage(function () {
 	                // OK
 	            }, function () {
-	                // KO
+	                console.log('error initializing Crypho Api');
 	            }, this.namespace);
 	        }
 	    };
@@ -97,7 +97,6 @@
 	    SecureFileStorageService.prototype.securityApiReady = function () {
 	        var _this = this;
 	        var deferred = this.$q.defer();
-	        this.setNamespace();
 	        this.ionic.Platform.ready(function () {
 	            if (_this.canEncrypt()) {
 	                _this.setSecurityApis();
@@ -128,7 +127,6 @@
 	                    });
 	                }
 	                else {
-	                    console.log('writing with crypho api');
 	                    _this.cryphoSecurityApi.set(function (key) {
 	                        deferred.resolve();
 	                    }, function (error) {
@@ -168,6 +166,28 @@
 	                    }, function (error) {
 	                        deferred.reject(error);
 	                    }, key);
+	                }
+	            }
+	            else {
+	                deferred.reject();
+	            }
+	        });
+	        return deferred.promise;
+	    };
+	    SecureFileStorageService.prototype.clear = function () {
+	        var _this = this;
+	        var deferred = this.$q.defer();
+	        this.securityApiReady().then(function (isReady) {
+	            if (isReady) {
+	                if (_this.ionic.Platform.isAndroid()) {
+	                    deferred.reject('not implemented on Android yet');
+	                }
+	                else {
+	                    _this.cryphoSecurityApi.clear(function () {
+	                        deferred.resolve();
+	                    }, function (error) {
+	                        deferred.reject(error);
+	                    });
 	                }
 	            }
 	            else {

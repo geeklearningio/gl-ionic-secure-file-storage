@@ -6,7 +6,9 @@ export class MainController {
     result: string;
 
     /** @ngInject */
-    constructor(private secureFileStorageService: SecureFileStorageService) {
+    constructor(
+        private secureFileStorageService: SecureFileStorageService,
+        private $ionicPopup: any) {
     }
 
     readSecureStorage() {
@@ -24,6 +26,23 @@ export class MainController {
         this.secureFileStorageService.write('mykey', data)
             .then(() => {
                 this.isLoading = false;
+            });
+    }
+
+    clearSecureStorage() {
+        this.isLoading = true;
+        this.secureFileStorageService.clear()
+            .then(() => {
+                this.isLoading = false;
+                this.$ionicPopup.alert({
+                    title: 'Cache cleared',
+                    template: 'The cache has been cleared'
+                });
+            }, (error) => {
+                this.$ionicPopup.alert({
+                    title: 'Warning',
+                    template: 'This functionnality is not implemented yet on Android'
+                });
             });
     }
 }

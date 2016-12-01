@@ -124,6 +124,26 @@ export class SecureFileStorageService {
         return deferred.promise;
     }
 
+    public clear(): angular.IPromise<any> {
+        var deferred: ng.IDeferred<any> = this.$q.defer();
+        this.securityApiReady().then((isReady: boolean) => {
+            if (isReady) {
+                if (this.ionic.Platform.isAndroid()) {
+                    deferred.reject('not implemented on Android yet');
+                } else {
+                    this.cryphoSecurityApi.clear(() => {
+                        deferred.resolve();
+                    }, (error) => {
+                        deferred.reject(error);
+                    });
+                }
+            } else {
+                deferred.reject();
+            }
+        });
+        return deferred.promise;
+    }
+
     public delete(key: string): angular.IPromise<any> {
         var deferred: ng.IDeferred<any> = this.$q.defer();
         this.securityApiReady().then((isReady: boolean) => {
@@ -150,6 +170,8 @@ export class SecureFileStorageService {
         });
         return deferred.promise;
     }
+
+
 
     canUseSecureFileStorage(): angular.IPromise<boolean> {
         var deferred: ng.IDeferred<any> = this.$q.defer();
