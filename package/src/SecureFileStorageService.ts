@@ -106,15 +106,19 @@ export class SecureFileStorageService {
                             // if the key does not exist, we get a file system error. Just don't log anything
                             if (error.code !== 1) {
                                 console.log("Error getting encrypted file data, error code is: " + error.code + ", error message is: " + error.message);
+                                deferred.reject(error);
+                            } else {
+                                deferred.resolve(null);
                             }
-                            deferred.reject(error);
+
                         });
                 } else {
                     console.log('reading with crypho api');
                     this.cryphoSecurityApi.get((value) => {
                         deferred.resolve(value);
                     }, (error) => {
-                        deferred.reject(error);
+                        deferred.resolve(null);
+                        //deferred.reject(error);
                     }, key);
                 }
             } else {
