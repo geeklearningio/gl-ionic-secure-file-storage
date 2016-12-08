@@ -65,9 +65,8 @@ export class SecureFileStorageService {
         return deferred.promise;
     }
 
-    public write(key: string, data: any, iCloudSync:boolean): angular.IPromise<any> {
+    public write(key: string, data: any, iCloudSync:boolean = true): angular.IPromise<any> {
         var deferred: ng.IDeferred<any> = this.$q.defer();
-        if (iCloudSync === void 0) { iCloudSync = false; }
         this.securityApiReady().then((isReady: boolean) => {
             if (isReady) {
                 if (this.ionic.Platform.isAndroid()) {
