@@ -65,7 +65,7 @@ export class SecureFileStorageService {
         return deferred.promise;
     }
 
-    public write(key: string, data: any, iCloudSync:boolean = true): angular.IPromise<any> {
+    public write(key: string, data: any, iCloudSync:boolean = false): angular.IPromise<any> {
         var deferred: ng.IDeferred<any> = this.$q.defer();
         this.securityApiReady().then((isReady: boolean) => {
             if (isReady) {
