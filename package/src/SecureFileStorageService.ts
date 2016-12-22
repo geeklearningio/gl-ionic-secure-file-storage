@@ -116,12 +116,11 @@ export class SecureFileStorageService {
 
                         });
                 } else {
-                    console.log('reading with crypho api');
                     this.cryphoSecurityApi.get((value) => {
                         deferred.resolve(value);
                     }, (error) => {
                         deferred.resolve(null);
-                        //deferred.reject(error);
+                        // deferred.reject(error);
                     }, key);
                 }
             } else {
@@ -168,7 +167,7 @@ export class SecureFileStorageService {
                     this.cryphoSecurityApi.remove((key) => {
                         deferred.resolve();
                     }, (error) => {
-                        deferred.reject(error);
+                        deferred.resolve();
                     }, key);
                 }
             } else {
