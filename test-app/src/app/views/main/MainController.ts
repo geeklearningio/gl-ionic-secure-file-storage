@@ -30,7 +30,7 @@ export class MainController {
     writeSecureStorage() {
         this.isLoading = true;
         var data = 'encrypted data';
-        this.secureFileStorageService.write('mykey', data)
+        this.secureFileStorageService.write('mykey', data,false)
             .then(() => {
                 this.isLoading = false;
             });

@@ -16,7 +16,7 @@ export declare class SecureFileStorageService {
     private setSecurityApis();
     private canEncrypt();
     private securityApiReady();
-    write(key: string, data: any): angular.IPromise<any>;
+    write(key: string, data: any, iCloudSync?: boolean): angular.IPromise<any>;
     read(key: string): angular.IPromise<any>;
     clear(): angular.IPromise<any>;
     delete(key: string): angular.IPromise<any>;

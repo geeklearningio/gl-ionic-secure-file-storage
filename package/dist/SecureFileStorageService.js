@@ -84,11 +84,13 @@
 	        if (window.cordova) {
 	            this.securityApi = window.intel.security;
 	            this.setNamespace();
-	            this.cryphoSecurityApi = new window.cordova.plugins.SecureStorage(function () {
-	                // OK
-	            }, function () {
-	                console.log('error initializing Crypho Api');
-	            }, this.namespace);
+	            if (!this.ionic.Platform.isAndroid()) {
+	                this.cryphoSecurityApi = new window.cordova.plugins.SecureStorage(function () {
+	                    // OK
+	                }, function () {
+	                    console.log('error initializing Crypho Api');
+	                }, this.namespace);
+	            }
 	        }
 	    };
 	    SecureFileStorageService.prototype.canEncrypt = function () {
@@ -108,8 +110,9 @@
 	        });
 	        return deferred.promise;
 	    };
-	    SecureFileStorageService.prototype.write = function (key, data) {
+	    SecureFileStorageService.prototype.write = function (key, data, iCloudSync) {
 	        var _this = this;
+	        if (iCloudSync === void 0) { iCloudSync = false; }
 	        var deferred = this.$q.defer();
 	        this.securityApiReady().then(function (isReady) {
 	            if (isReady) {
@@ -131,7 +134,7 @@
 	                        deferred.resolve();
 	                    }, function (error) {
 	                        deferred.reject(error);
-	                    }, key, data);
+	                    }, key, data, iCloudSync);
 	                }
 	            }
 	            else {
@@ -155,8 +158,11 @@
 	                        // if the key does not exist, we get a file system error. Just don't log anything
 	                        if (error.code !== 1) {
 	                            console.log("Error getting encrypted file data, error code is: " + error.code + ", error message is: " + error.message);
+	                            deferred.reject(error);
 	                        }
-	                        deferred.reject(error);
+	                        else {
+	                            deferred.resolve(null);
+	                        }
 	                    });
 	                }
 	                else {
@@ -164,7 +170,8 @@
 	                    _this.cryphoSecurityApi.get(function (value) {
 	                        deferred.resolve(value);
 	                    }, function (error) {
-	                        deferred.reject(error);
+	                        deferred.resolve(null);
+	                        //deferred.reject(error);
 	                    }, key);
 	                }
 	            }
