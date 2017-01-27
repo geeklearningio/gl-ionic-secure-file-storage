@@ -160,8 +160,12 @@ export class SecureFileStorageService {
                             deferred.resolve();
                         })
                         .catch((error: any) => {
-                            console.log("Error getting encrypted file data, error code is: " + error.code + ", error message is: " + error.message);
-                            deferred.reject(error);
+                            if (error.code !== 1) {
+                                console.log("Error getting encrypted file data, error code is: " + error.code + ", error message is: " + error.message);
+                                deferred.reject(error);
+                            } else {
+                                deferred.resolve();
+                            }
                         });
                 } else {
                     this.cryphoSecurityApi.remove((key) => {
