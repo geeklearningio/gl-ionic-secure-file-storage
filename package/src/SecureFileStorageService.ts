@@ -89,13 +89,7 @@ export class SecureFileStorageService {
                         }, (error) => {
                             if (retry) {
                                 retry = false;
-                                this.delete(key)
-                                    .then(() => {
-                                        setHandler();
-                                    })
-                                    .catch(() => {
-                                        deferred.reject(error);
-                                    });
+                                setHandler();
                             } else {
                                 deferred.reject(error);
                             }
