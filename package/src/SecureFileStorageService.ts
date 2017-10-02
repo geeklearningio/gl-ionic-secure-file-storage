@@ -1,5 +1,5 @@
 ﻿'use strict';
-import {SecureFileStorageServiceConfigProvider} from "./SecureFileStorageServiceConfigProvider";
+import { SecureFileStorageServiceConfigProvider } from "./SecureFileStorageServiceConfigProvider";
 
 export class SecureFileStorageService {
     private securityApi: any;
@@ -8,9 +8,9 @@ export class SecureFileStorageService {
 
     /* @ngInject */
     constructor(private $q: angular.IQService,
-                private ionic: any,
-                private $rootElement: any,
-                private secureFileStorageServiceConfig: any) {
+        private ionic: any,
+        private $rootElement: any,
+        private secureFileStorageServiceConfig: any) {
 
     }
 
@@ -65,14 +65,14 @@ export class SecureFileStorageService {
         return deferred.promise;
     }
 
-    public write(key: string, data: any): angular.IPromise<any> {
+    public write(key: string, data: any, iCloudSync: boolean = false): angular.IPromise<any> {
         var deferred: ng.IDeferred<any> = this.$q.defer();
         this.securityApiReady().then((isReady: boolean) => {
             if (isReady) {
                 if (this.ionic.Platform.isAndroid()) {
-                    this.securityApi.secureData.createFromData({data: data})
+                    this.securityApi.secureData.createFromData({ data: data })
                         .then((dataInstanceID: string) => {
-                            return this.securityApi.secureStorage.write({id: key, instanceID: dataInstanceID});
+                            return this.securityApi.secureStorage.write({ id: key, instanceID: dataInstanceID });
                         })
                         .then(() => {
                             deferred.resolve();
@@ -82,11 +82,27 @@ export class SecureFileStorageService {
                             deferred.reject(error);
                         });
                 } else {
-                    this.cryphoSecurityApi.set((key) => {
-                        deferred.resolve();
-                    }, (error) => {
-                        deferred.reject(error);
-                    }, key, data);
+                    let retry = true;
+                    let setHandler = () => {
+                        this.cryphoSecurityApi.set((key) => {
+                            deferred.resolve();
+                        }, (error) => {
+                            if (retry) {
+                                retry = false;
+                                this.delete(key)
+                                    .then(() => {
+                                        setHandler();
+                                    })
+                                    .catch(() => {
+                                        deferred.reject(error);
+                                    });
+                            } else {
+                                deferred.reject(error);
+                            }
+                        }, key, data, iCloudSync);
+                    };
+
+                    setHandler();
                 }
             } else {
                 deferred.reject();
@@ -100,7 +116,7 @@ export class SecureFileStorageService {
         this.securityApiReady().then((isReady: boolean) => {
             if (isReady) {
                 if (this.ionic.Platform.isAndroid()) {
-                    this.securityApi.secureStorage.read({id: key})
+                    this.securityApi.secureStorage.read({ id: key })
                         .then(this.securityApi.secureData.getData)
                         .then((data: any) => {
                             deferred.resolve(data);
@@ -116,12 +132,11 @@ export class SecureFileStorageService {
 
                         });
                 } else {
-                    console.log('reading with crypho api');
                     this.cryphoSecurityApi.get((value) => {
                         deferred.resolve(value);
                     }, (error) => {
                         deferred.resolve(null);
-                        //deferred.reject(error);
+                        // deferred.reject(error);
                     }, key);
                 }
             } else {
@@ -156,19 +171,23 @@ export class SecureFileStorageService {
         this.securityApiReady().then((isReady: boolean) => {
             if (isReady) {
                 if (this.ionic.Platform.isAndroid()) {
-                    this.securityApi.secureStorage.delete({id: key})
+                    this.securityApi.secureStorage.delete({ id: key })
                         .then(() => {
                             deferred.resolve();
                         })
                         .catch((error: any) => {
-                            console.log("Error getting encrypted file data, error code is: " + error.code + ", error message is: " + error.message);
-                            deferred.reject(error);
+                            if (error.code !== 1) {
+                                console.log("Error getting encrypted file data, error code is: " + error.code + ", error message is: " + error.message);
+                                deferred.reject(error);
+                            } else {
+                                deferred.resolve();
+                            }
                         });
                 } else {
                     this.cryphoSecurityApi.remove((key) => {
                         deferred.resolve();
                     }, (error) => {
-                        deferred.reject(error);
+                        deferred.resolve();
                     }, key);
                 }
             } else {
