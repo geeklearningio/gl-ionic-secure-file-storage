@@ -1,7 +1,11 @@
 {
   "name": "gl-ionic-secure-file-storage",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Geek Learning secure file storage for Ionic applications.",
   "author": "Geek Learning",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "com-intel-security-cordova-plugin": "^2.0.3",
+    "cordova-plugin-secure-storage": "^2.6.8"
+  }
 }

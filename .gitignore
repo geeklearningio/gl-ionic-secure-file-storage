@@ -4,3 +4,4 @@ test-app/platforms
 test-app/plugins
 npm-debug.log
 test-app/www
+node_modules
